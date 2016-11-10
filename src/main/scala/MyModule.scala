@@ -24,13 +24,14 @@ object MyModule extends App {
       .agg(sum('value))
       .writeStream
       .format("console")
+      .option("truncate", false)
       .outputMode(OutputMode.Complete)
       .start
 
     intsInput.addData(
       TimedEvent(123123, 5, new Timestamp(System.currentTimeMillis())),
-      TimedEvent(123123, 1, new Timestamp(System.currentTimeMillis())),
-      TimedEvent(124412, 5, new Timestamp(System.currentTimeMillis())),
+      TimedEvent(123123, 1, new Timestamp(System.currentTimeMillis() + 2000)),
+      TimedEvent(124412, 5, new Timestamp(System.currentTimeMillis() + 4000)),
       TimedEvent(141, 3, new Timestamp(System.currentTimeMillis() + 20000)))
     query.awaitTermination()
 
